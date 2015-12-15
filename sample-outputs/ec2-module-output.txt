@@ -1,0 +1,125 @@
+ok: [localhost] => {
+    "var": {
+        "ec2_output": {
+            "changed": true, 
+            "instance_ids": [
+                "i-2e9bd39c", 
+                "i-2c9bd39e", 
+                "i-2d9bd39f"
+            ], 
+            "instances": [
+                {
+                    "ami_launch_index": "0", 
+                    "architecture": "x86_64", 
+                    "dns_name": "", 
+                    "ebs_optimized": false, 
+                    "groups": {
+                        "sg-8e88aeeb": "cluster-testing-sg"
+                    }, 
+                    "hypervisor": "xen", 
+                    "id": "i-2e9bd39c", 
+                    "image_id": "ami-df6a8b9b", 
+                    "instance_type": "t2.small", 
+                    "kernel": null, 
+                    "key_name": "cluster-testing", 
+                    "launch_time": "2015-12-01T23:25:20.000Z", 
+                    "placement": "us-west-1b", 
+                    "private_dns_name": "ip-10-0-81-62.us-west-1.compute.internal", 
+                    "private_ip": "10.0.81.62", 
+                    "public_dns_name": "", 
+                    "public_ip": "54.153.15.123", 
+                    "ramdisk": null, 
+                    "region": "us-west-1", 
+                    "root_device_name": "/dev/sda1", 
+                    "root_device_type": "ebs", 
+                    "state": "running", 
+                    "state_code": 16, 
+                    "tags": {}, 
+                    "tenancy": "default", 
+                    "virtualization_type": "hvm"
+                }, 
+                {
+                    "ami_launch_index": "2", 
+                    "architecture": "x86_64", 
+                    "dns_name": "", 
+                    "ebs_optimized": false, 
+                    "groups": {
+                        "sg-8e88aeeb": "cluster-testing-sg"
+                    }, 
+                    "hypervisor": "xen", 
+                    "id": "i-2c9bd39e", 
+                    "image_id": "ami-df6a8b9b", 
+                    "instance_type": "t2.small", 
+                    "kernel": null, 
+                    "key_name": "cluster-testing", 
+                    "launch_time": "2015-12-01T23:25:20.000Z", 
+                    "placement": "us-west-1b", 
+                    "private_dns_name": "ip-10-0-81-60.us-west-1.compute.internal", 
+                    "private_ip": "10.0.81.60", 
+                    "public_dns_name": "", 
+                    "public_ip": "54.153.30.193", 
+                    "ramdisk": null, 
+                    "region": "us-west-1", 
+                    "root_device_name": "/dev/sda1", 
+                    "root_device_type": "ebs", 
+                    "state": "running", 
+                    "state_code": 16, 
+                    "tags": {}, 
+                    "tenancy": "default", 
+                    "virtualization_type": "hvm"
+                }, 
+                {
+                    "ami_launch_index": "1", 
+                    "architecture": "x86_64", 
+                    "dns_name": "", 
+                    "ebs_optimized": false, 
+                    "groups": {
+                        "sg-8e88aeeb": "cluster-testing-sg"
+                    }, 
+                    "hypervisor": "xen", 
+                    "id": "i-2d9bd39f", 
+                    "image_id": "ami-df6a8b9b", 
+                    "instance_type": "t2.small", 
+                    "kernel": null, 
+                    "key_name": "cluster-testing", 
+                    "launch_time": "2015-12-01T23:25:20.000Z", 
+                    "placement": "us-west-1b", 
+                    "private_dns_name": "ip-10-0-81-61.us-west-1.compute.internal", 
+                    "private_ip": "10.0.81.61", 
+                    "public_dns_name": "", 
+                    "public_ip": "54.153.12.113", 
+                    "ramdisk": null, 
+                    "region": "us-west-1", 
+                    "root_device_name": "/dev/sda1", 
+                    "root_device_type": "ebs", 
+                    "state": "running", 
+                    "state_code": 16, 
+                    "tags": {}, 
+                    "tenancy": "default", 
+                    "virtualization_type": "hvm"
+                }
+            ], 
+            "invocation": {
+                "module_args": "", 
+                "module_complex_args": {
+                    "assign_public_ip": true, 
+                    "count": 3, 
+                    "group": "cluster-testing-sg", 
+                    "image": "ami-df6a8b9b", 
+                    "instance_tags": {
+                        "instance-type": "influxdb", 
+                        "test-type": "clustering"
+                    }, 
+                    "instance_type": "t2.small", 
+                    "key_name": "cluster-testing", 
+                    "region": "us-west-1", 
+                    "vpc_subnet_id": "subnet-8ab502d3", 
+                    "wait": true, 
+                    "wait_timeout": 500
+                }, 
+                "module_name": "ec2"
+            }, 
+            "tagged_instances": []
+        }
+    }
+}

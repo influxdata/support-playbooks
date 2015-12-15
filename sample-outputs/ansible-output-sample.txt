@@ -1,0 +1,298 @@
+PLAY [localhost] ************************************************************** 
+PATTERN: localhost
+
+GATHERING FACTS *************************************************************** 
+PATTERN: localhost
+ok: [localhost]
+
+TASK: [Create InfluxDB instances] ********************************************* 
+PATTERN: localhost
+changed: [localhost -> 127.0.0.1]
+
+TASK: [Create stress instances] *********************************************** 
+PATTERN: localhost
+changed: [localhost -> 127.0.0.1]
+
+TASK: [A moment of silence] *************************************************** 
+PATTERN: localhost
+(^C-c = continue early, ^C-a = abort)
+[localhost]
+Pausing for 120 seconds
+ok: [localhost]
+
+TASK: [Add InfluxDB hosts to inventory] *************************************** 
+ok: [localhost] => (item={u'ramdisk': None, u'kernel': None, u'root_device_type': u'ebs', u'private_dns_name': u'ip-10-0-79-54.us-west-1.compute.internal', u'tags': {}, u'key_name': u'cluster-testing', u'public_ip': u'54.67.126.205', u'image_id': u'ami-df6a8b9b', u'tenancy': u'default', u'private_ip': u'10.0.79.54', u'groups': {u'sg-8e88aeeb': u'cluster-testing-sg'}, u'public_dns_name': u'', u'state_code': 16, u'id': u'i-92eea520', u'placement': u'us-west-1b', u'ami_launch_index': u'2', u'dns_name': u'', u'region': u'us-west-1', u'ebs_optimized': False, u'launch_time': u'2015-12-02T21:17:31.000Z', u'instance_type': u't2.small', u'state': u'running', u'root_device_name': u'/dev/sda1', u'hypervisor': u'xen', u'virtualization_type': u'hvm', u'architecture': u'x86_64'})
+ok: [localhost] => (item={u'ramdisk': None, u'kernel': None, u'root_device_type': u'ebs', u'private_dns_name': u'ip-10-0-79-55.us-west-1.compute.internal', u'tags': {}, u'key_name': u'cluster-testing', u'public_ip': u'54.67.123.86', u'image_id': u'ami-df6a8b9b', u'tenancy': u'default', u'private_ip': u'10.0.79.55', u'groups': {u'sg-8e88aeeb': u'cluster-testing-sg'}, u'public_dns_name': u'', u'state_code': 16, u'id': u'i-93eea521', u'placement': u'us-west-1b', u'ami_launch_index': u'1', u'dns_name': u'', u'region': u'us-west-1', u'ebs_optimized': False, u'launch_time': u'2015-12-02T21:17:31.000Z', u'instance_type': u't2.small', u'state': u'running', u'root_device_name': u'/dev/sda1', u'hypervisor': u'xen', u'virtualization_type': u'hvm', u'architecture': u'x86_64'})
+ok: [localhost] => (item={u'ramdisk': None, u'kernel': None, u'root_device_type': u'ebs', u'private_dns_name': u'ip-10-0-79-56.us-west-1.compute.internal', u'tags': {}, u'key_name': u'cluster-testing', u'public_ip': u'54.67.123.96', u'image_id': u'ami-df6a8b9b', u'tenancy': u'default', u'private_ip': u'10.0.79.56', u'groups': {u'sg-8e88aeeb': u'cluster-testing-sg'}, u'public_dns_name': u'', u'state_code': 16, u'id': u'i-90eea522', u'placement': u'us-west-1b', u'ami_launch_index': u'0', u'dns_name': u'', u'region': u'us-west-1', u'ebs_optimized': False, u'launch_time': u'2015-12-02T21:17:31.000Z', u'instance_type': u't2.small', u'state': u'running', u'root_device_name': u'/dev/sda1', u'hypervisor': u'xen', u'virtualization_type': u'hvm', u'architecture': u'x86_64'})
+
+TASK: [Add stress hosts to inventory] ***************************************** 
+ok: [localhost] => (item={u'ramdisk': None, u'kernel': None, u'root_device_type': u'ebs', u'private_dns_name': u'ip-10-0-99-172.us-west-1.compute.internal', u'tags': {}, u'key_name': u'cluster-testing', u'public_ip': u'54.183.6.250', u'image_id': u'ami-df6a8b9b', u'tenancy': u'default', u'private_ip': u'10.0.99.172', u'groups': {u'sg-8e88aeeb': u'cluster-testing-sg'}, u'public_dns_name': u'', u'state_code': 16, u'id': u'i-c8eca77a', u'placement': u'us-west-1b', u'ami_launch_index': u'0', u'dns_name': u'', u'region': u'us-west-1', u'ebs_optimized': False, u'launch_time': u'2015-12-02T21:18:27.000Z', u'instance_type': u't2.small', u'state': u'running', u'root_device_name': u'/dev/sda1', u'hypervisor': u'xen', u'virtualization_type': u'hvm', u'architecture': u'x86_64'})
+
+PLAY [influxdb;stress] ******************************************************** 
+
+GATHERING FACTS *************************************************************** 
+ok: [54.183.6.250]
+ok: [54.67.123.96]
+ok: [54.67.126.205]
+ok: [54.67.123.86]
+
+PLAY [influxdb] *************************************************************** 
+PATTERN: influxdb
+
+GATHERING FACTS *************************************************************** 
+PATTERN: influxdb
+ok: [54.67.123.86]
+ok: [54.67.126.205]
+ok: [54.67.123.96]
+
+TASK: [Install any necessary dependencies [RedHat/CentOS]] ******************** 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+skipping: [54.67.123.96]
+skipping: [54.67.123.86]
+skipping: [54.67.126.205]
+
+TASK: [Add InfluxDB repository file [RHEL/CentOS]] **************************** 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+skipping: [54.67.123.86]
+skipping: [54.67.123.96]
+skipping: [54.67.126.205]
+
+TASK: [Install InfluxDB packages [RHEL/CentOS]] ******************************* 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+skipping: [54.67.126.205]
+skipping: [54.67.123.86]
+skipping: [54.67.123.96]
+
+TASK: [Install any necessary dependencies [Debian/Ubuntu]] ******************** 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+changed: [54.67.123.96] => (item=python-httplib2,python-apt,curl)
+changed: [54.67.126.205] => (item=python-httplib2,python-apt,curl)
+changed: [54.67.123.86] => (item=python-httplib2,python-apt,curl)
+
+TASK: [Import InfluxDB GPG signing key [Debian/Ubuntu]] *********************** 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+changed: [54.67.126.205]
+changed: [54.67.123.96]
+changed: [54.67.123.86]
+
+TASK: [Add InfluxDB repository [Debian/Ubuntu]] ******************************* 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+changed: [54.67.123.86]
+changed: [54.67.123.96]
+changed: [54.67.126.205]
+
+TASK: [Install InfluxDB packages [Debian/Ubuntu]] ***************************** 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+changed: [54.67.123.86]
+changed: [54.67.123.96]
+changed: [54.67.126.205]
+
+TASK: [Create InfluxDB-specific directories (if not already created)] ********* 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+changed: [54.67.126.205] => (item=/etc/influxdb)
+changed: [54.67.126.205] => (item=/var/lib/influxdb/meta)
+changed: [54.67.126.205] => (item=/var/lib/influxdb/data)
+changed: [54.67.126.205] => (item=/var/lib/influxdb/wal)
+changed: [54.67.126.205] => (item=/var/lib/influxdb/hh)
+changed: [54.67.123.86] => (item=/etc/influxdb)
+changed: [54.67.123.86] => (item=/var/lib/influxdb/meta)
+changed: [54.67.123.86] => (item=/var/lib/influxdb/data)
+changed: [54.67.123.86] => (item=/var/lib/influxdb/wal)
+changed: [54.67.123.86] => (item=/var/lib/influxdb/hh)
+changed: [54.67.123.96] => (item=/etc/influxdb)
+changed: [54.67.123.96] => (item=/var/lib/influxdb/meta)
+changed: [54.67.123.96] => (item=/var/lib/influxdb/data)
+changed: [54.67.123.96] => (item=/var/lib/influxdb/wal)
+changed: [54.67.123.96] => (item=/var/lib/influxdb/hh)
+
+TASK: [Set templatized InfluxDB configuration] ******************************** 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+changed: [54.67.123.86]
+changed: [54.67.123.96]
+changed: [54.67.126.205]
+
+TASK: [Start the InfluxDB service] ******************************************** 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+changed: [54.67.126.205]
+changed: [54.67.123.86]
+changed: [54.67.123.96]
+
+TASK: [Update hosts configuration] ******************************************** 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+changed: [54.67.126.205]
+changed: [54.67.123.86]
+changed: [54.67.123.96]
+
+TASK: [Cluster servers] ******************************************************* 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+changed: [54.67.123.86]
+changed: [54.67.126.205]
+changed: [54.67.123.96]
+
+TASK: [Check to see which databases already exist] **************************** 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+skipping: [54.67.123.86]
+skipping: [54.67.126.205]
+skipping: [54.67.123.96]
+
+TASK: [Create demo database] ************************************************** 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+skipping: [54.67.126.205]
+skipping: [54.67.123.86]
+skipping: [54.67.123.96]
+
+TASK: [Load demo data] ******************************************************** 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+skipping: [54.67.123.96] => (item=1)
+skipping: [54.67.123.96] => (item=2)
+skipping: [54.67.123.96] => (item=3)
+skipping: [54.67.123.96] => (item=4)
+skipping: [54.67.123.96] => (item=5)
+skipping: [54.67.123.96] => (item=6)
+skipping: [54.67.123.96] => (item=7)
+skipping: [54.67.123.96] => (item=8)
+skipping: [54.67.123.96] => (item=9)
+skipping: [54.67.123.96] => (item=10)
+skipping: [54.67.126.205] => (item=1)
+skipping: [54.67.126.205] => (item=2)
+skipping: [54.67.126.205] => (item=3)
+skipping: [54.67.126.205] => (item=4)
+skipping: [54.67.126.205] => (item=5)
+skipping: [54.67.126.205] => (item=6)
+skipping: [54.67.126.205] => (item=7)
+skipping: [54.67.126.205] => (item=8)
+skipping: [54.67.126.205] => (item=9)
+skipping: [54.67.126.205] => (item=10)
+skipping: [54.67.123.86] => (item=1)
+skipping: [54.67.123.86] => (item=2)
+skipping: [54.67.123.86] => (item=3)
+skipping: [54.67.123.86] => (item=4)
+skipping: [54.67.123.86] => (item=5)
+skipping: [54.67.123.86] => (item=6)
+skipping: [54.67.123.86] => (item=7)
+skipping: [54.67.123.86] => (item=8)
+skipping: [54.67.123.86] => (item=9)
+skipping: [54.67.123.86] => (item=10)
+
+NOTIFIED: [purge metaid] ****************************************************** 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+ok: [54.67.123.86]
+ok: [54.67.126.205]
+ok: [54.67.123.96]
+
+NOTIFIED: [purge raftdb] ****************************************************** 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+ok: [54.67.123.86]
+ok: [54.67.126.205]
+ok: [54.67.123.96]
+
+NOTIFIED: [purge peers] ******************************************************* 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+ok: [54.67.123.86]
+ok: [54.67.123.96]
+ok: [54.67.126.205]
+
+NOTIFIED: [restart influxdb] ************************************************** 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+changed: [54.67.123.86]
+changed: [54.67.126.205]
+changed: [54.67.123.96]
+
+NOTIFIED: [pause] ************************************************************* 
+PATTERN: 54.67.126.205;54.67.123.86;54.67.123.96
+(^C-c = continue early, ^C-a = abort)
+[54.67.126.205, 54.67.123.86, 54.67.123.96]
+Pausing for 3 seconds
+ok: [54.67.126.205]
+
+PLAY [stress] ***************************************************************** 
+PATTERN: stress
+
+GATHERING FACTS *************************************************************** 
+PATTERN: stress
+ok: [54.183.6.250]
+
+TASK: [Install any necessary dependencies [RedHat/CentOS]] ******************** 
+PATTERN: 54.183.6.250
+skipping: [54.183.6.250]
+
+TASK: [Add InfluxDB repository file [RHEL/CentOS]] **************************** 
+PATTERN: 54.183.6.250
+skipping: [54.183.6.250]
+
+TASK: [Install InfluxDB packages [RHEL/CentOS]] ******************************* 
+PATTERN: 54.183.6.250
+skipping: [54.183.6.250]
+
+TASK: [Install any necessary dependencies [Debian/Ubuntu]] ******************** 
+PATTERN: 54.183.6.250
+changed: [54.183.6.250] => (item=python-httplib2,python-apt,curl)
+
+TASK: [Import InfluxDB GPG signing key [Debian/Ubuntu]] *********************** 
+PATTERN: 54.183.6.250
+changed: [54.183.6.250]
+
+TASK: [Add InfluxDB repository [Debian/Ubuntu]] ******************************* 
+PATTERN: 54.183.6.250
+changed: [54.183.6.250]
+
+TASK: [Install InfluxDB packages [Debian/Ubuntu]] ***************************** 
+PATTERN: 54.183.6.250
+changed: [54.183.6.250]
+
+TASK: [Create InfluxDB-specific directories (if not already created)] ********* 
+PATTERN: 54.183.6.250
+changed: [54.183.6.250] => (item=/etc/influxdb)
+changed: [54.183.6.250] => (item=/var/lib/influxdb/meta)
+changed: [54.183.6.250] => (item=/var/lib/influxdb/data)
+changed: [54.183.6.250] => (item=/var/lib/influxdb/wal)
+changed: [54.183.6.250] => (item=/var/lib/influxdb/hh)
+
+TASK: [Set templatized InfluxDB configuration] ******************************** 
+PATTERN: 54.183.6.250
+changed: [54.183.6.250]
+
+TASK: [Start the InfluxDB service] ******************************************** 
+PATTERN: 54.183.6.250
+skipping: [54.183.6.250]
+
+TASK: [Update hosts configuration] ******************************************** 
+PATTERN: 54.183.6.250
+skipping: [54.183.6.250]
+
+TASK: [Cluster servers] ******************************************************* 
+PATTERN: 54.183.6.250
+skipping: [54.183.6.250]
+
+TASK: [Check to see which databases already exist] **************************** 
+PATTERN: 54.183.6.250
+skipping: [54.183.6.250]
+
+TASK: [Create demo database] ************************************************** 
+PATTERN: 54.183.6.250
+skipping: [54.183.6.250]
+
+TASK: [Load demo data] ******************************************************** 
+PATTERN: 54.183.6.250
+skipping: [54.183.6.250] => (item=1)
+skipping: [54.183.6.250] => (item=2)
+skipping: [54.183.6.250] => (item=3)
+skipping: [54.183.6.250] => (item=4)
+skipping: [54.183.6.250] => (item=5)
+skipping: [54.183.6.250] => (item=6)
+skipping: [54.183.6.250] => (item=7)
+skipping: [54.183.6.250] => (item=8)
+skipping: [54.183.6.250] => (item=9)
+skipping: [54.183.6.250] => (item=10)
+
+NOTIFIED: [restart influxdb] ************************************************** 
+PATTERN: 54.183.6.250
+changed: [54.183.6.250]
+
+PLAY RECAP ******************************************************************** 
+54.183.6.250               : ok=10   changed=7    unreachable=0    failed=0   
+54.67.123.86               : ok=17   changed=10   unreachable=0    failed=0   
+54.67.123.96               : ok=17   changed=10   unreachable=0    failed=0   
+54.67.126.205              : ok=17   changed=10   unreachable=0    failed=0   
+localhost                  : ok=6    changed=2    unreachable=0    failed=0   
+
