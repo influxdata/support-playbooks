@@ -26,9 +26,17 @@
 # 
 - hosts:
     - localhost
+  vars:
+    instance_security_group: cluster-testing-sg
+    instance_ssh_key: cluster-testing
+    instance_subnet_id: subnet-8ab502d3
+    influxdb_instance_count: 3
+    influxdb_instance_ami: ami-df6a8b9b
+    influxdb_instance_size: t2.medium
+    stress_instance_count: 1
+    stress_instance_ami: ami-df6a8b9b
+    stress_instance_size: t2.small
   connection: local
-  vars_files:
-    - defaults/main.yml
   tasks:
     - name: Create InfluxDB instances
       local_action:
@@ -90,18 +98,17 @@
     []
       
 - hosts: influxdb
+  vars:
+    test_id: 1234
+    test_name: no_test_name_provided
+    stress_results_server_hostname: localhost
+    telegraf_use_https: no
   user: ubuntu
   become: yes
-  vars_files:
-    - ../../influxdb/defaults/main.yml
-    - ../../influxdb/vars/main.yml
-    - ../../telegraf/defaults/main.yml
-    - ../../telegraf/vars/main.yml
-    - defaults/main.yml
-  tasks:
-    - include: ../../influxdb/tasks/main.yml
-      influxdb_cluster_servers: yes
-    - include: ../../telegraf/tasks/main.yml
+  roles:
+    - role: influxdb
+      influxdb_cluster_servers: yes }
+    - role: telegraf
       telegraf_runas_user: root
       telegraf_runas_group: root
       telegraf_plugins_enabled:
@@ -129,21 +136,11 @@
         name: "{{ test_name }}"          
       telegraf_influxdb_urls:
         - http{% if telegraf_use_https %}s{% endif %}://{{ stress_results_server_hostname }}:8086
-  handlers:
-    - include: ../../influxdb/handlers/main.yml
-    - include: ../../telegraf/handlers/main.yml
 
 - hosts: stress
   user: ubuntu
   become: yes
-  vars_files:
-    - ../../influxdb/defaults/main.yml
-    - ../../influxdb/vars/main.yml
-    - defaults/main.yml
-  tasks:
-    - include: ../../influxdb/tasks/main.yml
-      vars:
-        influxdb_start_service: no
-        influxdb_cluster_servers: no
-  handlers:
-    - include: ../../influxdb/handlers/main.yml
+  roles:
+    - role: influxdb
+      influxdb_start_service: no
+      influxdb_cluster_servers: no
