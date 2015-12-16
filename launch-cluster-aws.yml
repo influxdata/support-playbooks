@@ -5,14 +5,6 @@
 #
 # - AWS credentials must be added to ~/.boto file under a [Credentials] heading.
 #
-# - SSH must be configured already. Here is my configuration (~/.ssh/config): 
-#     Host 54.*
-#       User ubuntu
-#       IdentityFile ~/.ssh/cluster_testing_ssh
-#       StrictHostKeyChecking no
-#   If you don't want to configure SSH, you can specify the private key with
-#   the `ansible-playbook` command by using the `--private-key=<path>` param
-#
 # - The `ansible-playbook` command requires an inventory file to be specified
 #   at runtime. Since no inventory is used by this playbook, at the very
 #   least you will need to have a dummy inventory file with 'localhost' as
@@ -21,9 +13,6 @@
 # - You may also want to specify the 'ubuntu' user as the user to use when
 #   executing commands.
 #
-# - Only three servers per cluster is supported right now. Modifications to
-#   the influxdb role are required to support more.
-# 
 - hosts:
     - localhost
   vars:
@@ -98,16 +87,11 @@
     []
       
 - hosts: influxdb
-  vars:
-    test_id: 1234
-    test_name: no_test_name_provided
-    stress_results_server_hostname: localhost
-    telegraf_use_https: no
   user: ubuntu
   become: yes
   roles:
     - role: influxdb
-      influxdb_cluster_servers: yes }
+      influxdb_cluster_servers: yes
     - role: telegraf
       telegraf_runas_user: root
       telegraf_runas_group: root
@@ -144,3 +128,4 @@
     - role: influxdb
       influxdb_start_service: no
       influxdb_cluster_servers: no
+
