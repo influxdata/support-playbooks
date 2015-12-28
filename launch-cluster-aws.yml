@@ -119,7 +119,7 @@
         id: "{{ test_id }}"
         name: "{{ test_name }}"          
       telegraf_influxdb_urls:
-        - {{ stress_results_server_url }}
+        - "{{ stress_results_server_url }}"
 
 - hosts: stress
   user: ubuntu
