@@ -119,7 +119,7 @@
         id: "{{ test_id }}"
         name: "{{ test_name }}"          
       telegraf_influxdb_urls:
-        - http{% if telegraf_use_https %}s{% endif %}://{{ stress_results_server_hostname }}:8086
+        - {{ stress_results_server_url }}
 
 - hosts: stress
   user: ubuntu
