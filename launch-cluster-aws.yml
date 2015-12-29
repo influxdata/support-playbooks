@@ -80,6 +80,8 @@
 - hosts:
     - influxdb
     - stress
+  vars:
+    influxdb_install_version: nightly
   user: ubuntu
   become: yes
   gather_facts: yes
@@ -87,6 +89,8 @@
     []
       
 - hosts: influxdb
+  vars:
+    influxdb_install_version: nightly
   user: ubuntu
   become: yes
   roles:
@@ -122,6 +126,8 @@
         - "{{ stress_results_server_url }}"
 
 - hosts: stress
+  vars:
+    influxdb_install_version: nightly
   user: ubuntu
   become: yes
   roles:
