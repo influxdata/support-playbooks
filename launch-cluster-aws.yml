@@ -24,7 +24,7 @@
     influxdb_instance_size: t2.medium
     stress_instance_count: 1
     stress_instance_ami: ami-df6a8b9b
-    stress_instance_size: t2.small
+    stress_instance_size: c4.xlarge
   connection: local
   tasks:
     - name: Create InfluxDB instances
@@ -92,6 +92,7 @@
   roles:
     - role: influxdb
       influxdb_cluster_servers: yes
+      influxdb_data_engine: tsm1
     - role: telegraf
       telegraf_runas_user: root
       telegraf_runas_group: root
