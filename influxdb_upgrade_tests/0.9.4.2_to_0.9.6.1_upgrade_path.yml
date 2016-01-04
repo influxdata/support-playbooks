@@ -1,0 +1,16 @@
+######
+# Generic upgrade path test case (0.9.4.2 -> 0.9.6.1)
+######
+
+- hosts: all
+  tasks:
+    - include: ../influxdb_version_installations/0.9.4.2_install.yml
+  vars:
+    influxdb_load_sample_data: yes
+
+- hosts: all
+  tasks:
+    - include: ../influxdb_version_installations/0.9.6.1_install.yml
+      influxdb_template_configuration: no
+      influxdb_verify_database_is_present: sample_database
+
