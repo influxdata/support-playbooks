@@ -25,6 +25,10 @@
     stress_instance_count: 1
     stress_instance_ami: ami-df6a8b9b
     stress_instance_size: c4.xlarge
+    influxdb_disk_size: 10
+    influxdb_disk_type: gp2
+    stress_disk_size: 10
+    stress_disk_type: gp2
   connection: local
   tasks:
     - name: Create InfluxDB instances
@@ -44,6 +48,11 @@
           instance-type: influxdb
         vpc_subnet_id: "{{ instance_subnet_id }}"
         assign_public_ip: yes
+        volumes:
+          - device_name: /dev/sda1
+            volume_type: "{{ influxdb_disk_type }}"
+            volume_size: "{{ influxdb_disk_size }}"
+            delete_on_termination: yes
       register: influxdb_provision_output
 
     - name: Create stress instances
@@ -63,6 +72,11 @@
           instance-type: stress
         vpc_subnet_id: "{{ instance_subnet_id }}"
         assign_public_ip: yes
+        volumes:
+          - device_name: /dev/sda1
+            volume_type: "{{ stress_disk_type }}"
+            volume_size: "{{ stress_disk_size }}"
+            delete_on_termination: yes
       register: stress_provision_output
     
     - name: A moment of silence
