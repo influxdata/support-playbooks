@@ -27,8 +27,10 @@
     stress_instance_size: c4.xlarge
     influxdb_disk_size: 10
     influxdb_disk_type: gp2
+    influxdb_disk_iops: 30
     stress_disk_size: 10
     stress_disk_type: gp2
+    stress_disk_iops: 30
   connection: local
   tasks:
     - name: Create InfluxDB instances
@@ -53,6 +55,7 @@
             volume_type: "{{ influxdb_disk_type }}"
             volume_size: "{{ influxdb_disk_size }}"
             delete_on_termination: yes
+            iops: "{{ influxdb_disk_iops }}"
       register: influxdb_provision_output
 
     - name: Create stress instances
@@ -77,6 +80,7 @@
             volume_type: "{{ stress_disk_type }}"
             volume_size: "{{ stress_disk_size }}"
             delete_on_termination: yes
+            iops: "{{ stress_disk_iops }}"
       register: stress_provision_output
     
     - name: A moment of silence
