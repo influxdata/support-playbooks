@@ -45,7 +45,7 @@
         wait_timeout: 500
         count: "{{ influxdb_instance_count }}"
         instance_tags:
-          Name: cluster-testing-influxdb-{{ ansible_date_time.epoch }}
+          Name: "{{ ansible_user_id }}-cluster-test-influxdb-{{ ansible_date_time.epoch }}"
           test-type: clustering
           instance-type: influxdb
         vpc_subnet_id: "{{ instance_subnet_id }}"
@@ -69,7 +69,7 @@
         wait_timeout: 500
         count: "{{ stress_instance_count }}"
         instance_tags:
-          Name: cluster-testing-stress-{{ ansible_date_time.epoch }}
+          Name: "{{ ansible_user_id }}-cluster-test-stress-{{ ansible_date_time.epoch }}"
           test-type: clustering
           instance-type: stress
         vpc_subnet_id: "{{ instance_subnet_id }}"
