@@ -1,0 +1,19 @@
+---
+#
+# Playbook to create nightly builds, and upload them to S3. Note, assumes boto credentials
+# are included in the environment and that `build.*` is a role on your role path.
+# If you would just like to generate a nightly (and not upload it to S3), then s/yes/no/
+# for the `*_upload_to_s3` variable below.
+#
+
+- hosts: all
+  roles:
+    - role: build.kapacitor
+      kapacitor_upload_to_s3: yes
+      kapacitor_build_platform: all
+      kapacitor_build_arch: all
+      kapacitor_master_version: 0.10.0
+      kapacitor_build_nightly: yes
+      kapacitor_go_version: 1.4.2
+      kapacitor_build_branch: master
+

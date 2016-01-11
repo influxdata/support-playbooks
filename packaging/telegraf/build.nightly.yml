@@ -1,0 +1,20 @@
+---
+#
+# Playbook to create nightly builds, and upload them to S3. Note, assumes boto credentials
+# are included in the environment and that `build.*` is a role on your role path.
+# If you would just like to generate a nightly (and not upload it to S3), then s/yes/no/
+# for the `*_upload_to_s3` variable below.
+#
+
+- hosts: all
+  roles:
+    - role: build.telegraf
+      telegraf_upload_to_s3: yes
+      telegraf_build_platform: all
+      telegraf_build_arch: all
+      telegraf_master_version: 0.10.0
+      telegraf_build_nightly: yes
+      telegraf_go_version: 1.4.2
+      telegraf_build_branch: master
+
+      

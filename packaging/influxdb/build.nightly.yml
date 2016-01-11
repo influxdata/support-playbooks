@@ -1,9 +1,9 @@
 ---
 #
-# Playbook to create a nightly build, and upload it to S3. Note, assumes boto credentials
-# are included in the environment and that `build.influxdb` is a role on your role path.
+# Playbook to create nightly builds, and upload them to S3. Note, assumes boto credentials
+# are included in the environment and that `build.*` is a role on your role path.
 # If you would just like to generate a nightly (and not upload it to S3), then s/yes/no/
-# for the `influxdb_upload_to_s3` variable below.
+# for the `*_upload_to_s3` variable below.
 #
 
 - hosts: all

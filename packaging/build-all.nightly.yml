@@ -1,0 +1,35 @@
+---
+#
+# Playbook to create nightly builds, and upload them to S3. Note, assumes boto credentials
+# are included in the environment and that `build.*` is a role on your role path.
+# If you would just like to generate a nightly (and not upload it to S3), then s/yes/no/
+# for the `*_upload_to_s3` variable below.
+#
+
+- hosts: all
+  roles:
+    - role: build.influxdb
+      influxdb_upload_to_s3: yes
+      influxdb_build_platform: all
+      influxdb_build_arch: all
+      influxdb_master_version: 0.10.0
+      influxdb_build_nightly: yes
+      influxdb_go_version: 1.4.2
+      influxdb_build_branch: master
+    - role: build.telegraf
+      telegraf_upload_to_s3: yes
+      telegraf_build_platform: all
+      telegraf_build_arch: all
+      telegraf_master_version: 0.10.0
+      telegraf_build_nightly: yes
+      telegraf_go_version: 1.4.2
+      telegraf_build_branch: master
+    - role: build.kapacitor
+      kapacitor_upload_to_s3: yes
+      kapacitor_build_platform: all
+      kapacitor_build_arch: all
+      kapacitor_master_version: 0.10.0
+      kapacitor_build_nightly: yes
+      kapacitor_go_version: 1.4.2
+      kapacitor_build_branch: master
+
