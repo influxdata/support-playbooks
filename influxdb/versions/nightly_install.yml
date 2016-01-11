@@ -1,0 +1,16 @@
+######
+# Generic install for nightly
+######
+
+- hosts: all
+  pre_tasks:
+    - set_fact:
+        influxdb_install_url: https://s3-us-west-1.amazonaws.com/influxdb-nightly/influxdb-nightly.x86_64.rpm
+      when: ansible_os_family == "RedHat"
+    - set_fact:
+        influxdb_install_url: https://s3-us-west-1.amazonaws.com/influxdb-nightly/influxdb_nightly_amd64.deb
+      when: ansible_os_family == "Debian"
+  roles:
+    - role: influxdb
+
+

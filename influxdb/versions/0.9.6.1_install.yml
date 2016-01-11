@@ -1,0 +1,16 @@
+######
+# Generic install of 0.9.6.1
+######
+
+- hosts: all
+  pre_tasks:
+    - set_fact:
+        influxdb_install_url: http://influxdb.s3.amazonaws.com/influxdb-0.9.6-1.x86_64.rpm
+      when: ansible_os_family == "RedHat"
+    - set_fact:
+        influxdb_install_url: http://influxdb.s3.amazonaws.com/influxdb_0.9.6.1_amd64.deb
+      when: ansible_os_family == "Debian"
+  roles:
+    - role: influxdb
+
+

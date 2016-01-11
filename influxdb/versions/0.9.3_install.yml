@@ -3,7 +3,7 @@
 ######
 
 - hosts: all
-  tasks:
+  pre_tasks:
     - set_fact:
         influxdb_install_url: http://influxdb.s3.amazonaws.com/influxdb_0.9.3_amd64.deb
       when: ansible_os_family == "Debian"
@@ -17,5 +17,4 @@
       influxdb_data_dir: /var/opt/influxdb/data
       influxdb_data_wal_dir: /var/opt/influxdb/wal
       influxdb_hh_dir: /var/opt/influxdb/hh
-      influxdb_load_sample_data: yes
       influxdb_binary_path: /opt/influxdb

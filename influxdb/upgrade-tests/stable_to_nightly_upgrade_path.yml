@@ -1,0 +1,24 @@
+######
+# Generic upgrade path test case (stable -> nightly)
+######
+
+- hosts: all
+  roles:
+    - role: influxdb
+      influxdb_install_version: stable
+      influxdb_load_sample_data: yes
+  
+- hosts: all
+  pre_tasks:
+    - set_fact:
+        influxdb_install_url: https://s3-us-west-1.amazonaws.com/influxdb-nightly/influxdb_nightly_amd64.deb
+      when: ansible_os_family == "Debian"
+    - set_fact:
+        influxdb_install_url: https://s3-us-west-1.amazonaws.com/influxdb-nightly/influxdb-nightly.x86_64.rpm
+      when: ansible_os_family == "RedHat"
+  roles:
+    - role: influxdb
+      influxdb_template_configuration: no
+      influxdb_load_sample_data: no
+      influxdb_verify_database_is_present: sample_database
+
