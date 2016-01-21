@@ -82,7 +82,7 @@
       register: stress_provision_output
     
     - name: A moment of silence
-      pause: minutes=2
+      pause: minutes=3
       
     - name: Add InfluxDB hosts to inventory
       add_host: hostname={{ item.public_ip }} groups=influxdb
