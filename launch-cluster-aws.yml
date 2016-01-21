@@ -125,7 +125,7 @@
         - mem
         - swap
         - system
-        - procstat.specifications
+        - procstat
       telegraf_plugin_settings:
         cpu:
           percpu: "true"
@@ -135,7 +135,7 @@
         disk:
         io:
           skip_serial_number: "true"
-        procstat.specifications:
+        procstat:
           exe: influxd
           prefix: influxdb
       telegraf_tags:
