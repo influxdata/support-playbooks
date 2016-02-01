@@ -114,6 +114,7 @@
       influxdb_purge_peer_data: yes
       influxdb_meta_cluster_tracing: "true"
       influxdb_install_version: nightly
+      influxdb_overwrite_hosts_file: yes
     - role: telegraf
       telegraf_runas_user: root
       telegraf_runas_group: root
