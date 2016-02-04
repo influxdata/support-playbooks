@@ -80,9 +80,14 @@
             volume_size: "{{ stress_disk_size }}"
             delete_on_termination: yes
       register: stress_provision_output
-    
-    - name: A moment of silence
-      pause: minutes=3
+
+    - name: Wait for SSH
+      wait_for: host={{ item.public_ip }} port=22 delay=60 timeout=320 state=started
+      with_items: influxdb_provision_output.instances
+      
+    - name: Wait for SSH
+      wait_for: host={{ item.public_ip }} port=22 delay=60 timeout=320 state=started
+      with_items: stress_provision_output.instances
       
     - name: Add InfluxDB hosts to inventory
       add_host: hostname={{ item.public_ip }} groups=influxdb
