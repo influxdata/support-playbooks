@@ -1,0 +1,104 @@
+---
+- hosts:
+    - localhost
+  vars:
+    telegraf_influxdb_url: http://smoketest.influxdata.com:8086
+    instance_security_group: cluster-testing-sg
+    instance_ssh_key: cluster-testing
+    instance_subnet_id: subnet-8ab502d3
+    influxdb_instance_count: 1
+    influxdb_instance_ami: ami-df6a8b9b
+    influxdb_instance_size: t2.medium
+    influxdb_disk_size: 32
+    influxdb_disk_type: gp2
+    influxdb_disk_iops: 90
+    stress_disk_size: 10
+    stress_disk_type: gp2
+    stress_disk_iops: 30
+  connection: local
+  tasks:
+    - name: Create InfluxDB instance
+      local_action:
+        module: ec2
+        key_name: "{{ instance_ssh_key }}"
+        group: "{{ instance_security_group }}"
+        instance_type: "{{ influxdb_instance_size }}"
+        region: us-west-1
+        image: "{{ influxdb_instance_ami }}"
+        wait: yes
+        wait_timeout: 500
+        count: "{{ influxdb_instance_count }}"
+        instance_tags:
+          Name: "{{ ansible_user_id }}-single-node-influxdb-{{ ansible_date_time.epoch }}"
+          test-type: smoke
+          test-variation: single-node
+          instance-type: influxdb-node
+          test_id: "{{ test_id }}"
+          test_name: "{{ test_name }}"
+        vpc_subnet_id: "{{ instance_subnet_id }}"
+        assign_public_ip: yes
+        volumes:
+          - device_name: /dev/sda1
+            volume_type: "{{ influxdb_disk_type }}"
+            volume_size: "{{ influxdb_disk_size }}"
+            delete_on_termination: yes
+      register: influxdb_provision_output
+
+    - name: Wait for SSH
+      wait_for: host={{ item.public_ip }} port=22 delay=60 timeout=320 state=started
+      with_items: influxdb_provision_output.instances
+
+    - name: Add InfluxDB host to inventory
+      add_host: hostname={{ item.public_ip }} groups=influxdb
+      with_items: "{{ influxdb_provision_output.instances }}"
+
+- hosts:
+    - influxdb
+  user: ubuntu
+  become: yes
+  gather_facts: yes
+  tasks:
+    []
+      
+- hosts: influxdb
+  user: ubuntu
+  become: yes
+  roles:
+    - role: influxdb
+      influxdb_data_engine: tsm1
+      influxdb_install_version: nightly
+      influxdb_overwrite_hosts_file: yes
+    - role: telegraf
+      telegraf_influxdb_url: http://smoketest.influxdata.com:8086
+      telegraf_runas_user: root
+      telegraf_runas_group: root
+      telegraf_plugins_enabled:
+        - cpu
+        - disk
+        - io
+        - mem
+        - swap
+        - system
+        - procstat
+        - influxdb
+      telegraf_plugin_settings:
+        cpu:
+          percpu: "true"
+          totalcpu: "true"
+          drop:
+            - cpu_time
+        disk:
+        io:
+          skip_serial_number: "true"
+        procstat:
+          exe: influxd
+          prefix: influxdb
+        influxdb:
+          urls:
+            - http://localhost:8086/debug/vars
+      telegraf_tags:
+        test_id: "{{ test_id }}"
+        test_name: "{{ test_name }}"
+      telegraf_influxdb_urls:
+        - "{{ telegraf_influxdb_url }}"
+
